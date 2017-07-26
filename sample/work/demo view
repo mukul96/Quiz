@@ -1,0 +1,100 @@
+from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
+# Create your views here.
+from django.http import HttpResponse
+from datetime import date
+from .models import Question,Stan
+i=1
+x=0
+a=[]
+
+def index(request):
+    global i
+    a=Question.objects.get(pk=1)
+    b=Question.objects.get(pk=2)
+    c=Question.objects.get(pk=3)
+    
+    year=date.today()
+    
+    question=Question.objects.get(pk=i)
+    val=0
+    print(i) 
+    return render(request,"index.html",{"year": year,"question":question,"i":i,"val":val})
+
+
+    
+    
+  
+
+    
+    
+
+def retr(request):
+    
+    global x
+    i= int(request.POST['i'])
+    q=Question.objects.get(pk=i)
+    
+    item=request.POST.get('ch',False)
+    h=Stan(ques=q,reponse=item,pk=i)
+   
+    
+    h.save()
+    print(h.reponse)
+    k=Question.objects.get(id=i)
+    
+    print(Stan.objects.filter(pk=i))
+    i=i+1
+
+    if item == k.answer:
+              x=x+1
+    if i>=4:
+       return render(request,"retr2.html",{"x":x})
+    question=Question.objects.get(id=i)
+    try:
+       st = Stan.objects.get(pk=i)
+    except ObjectDoesNotExist:
+           val=0;
+           return render(request,"index.html",{"question":question,"i":i,"val":val})
+    val=st.reponse
+    return render(request,"index.html",{"question":question,"i":i,"val":val})
+
+def res(request):
+    resp=int(request.POST['resp'])
+    print(resp)
+    
+    resp=resp-1;
+    rep=Stan.objects.get(pk=resp)
+    val=rep.reponse
+    question=Question.objects.get(pk=resp)
+    if val==False:
+       return render(request,"index.html",{"question":question,"i":resp, "val":val})
+       
+    else :
+       return render(request,"index.html",{"question": question,"i":resp,"val":val})   
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

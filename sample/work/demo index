@@ -1,0 +1,108 @@
+
+
+
+
+
+
+<html>
+<h1>
+now date is </h1>
+{{year}}<br>
+
+{% load staticfiles %}
+<body onload="quizCount();" >
+<script type="text/javascript"  src="{% static 'jquery-3.1.1.js' %}"> 
+
+ </script>
+<script type="text/javascript"  src="{% static 'ref.js' %}"> 
+
+ </script>
+
+<ul>
+  
+    <p id="demo" >welcome to the test</p>
+      
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, post-check=0, pre-check=0" /> 
+<meta http-equiv="Pragma" content="no-cache" />
+
+
+<li>{{ question.question_text }}</li>
+<form method = "POST" action="retr" id={{question.id}}  >{% csrf_token %}
+{% ifequal val  question.ch1 %}
+ 
+<input type="checkbox" name="ch" value={{question.ch1}} checked  > {{question.ch1}}<br>
+{% else %}
+  <input type="checkbox" name="ch" value={{question.ch1}}  > {{question.ch1}}<br>
+   {% endifequal %}  
+{% ifequal val  question.ch2 %}
+<input type="checkbox" name="ch" value={{question.ch2}}  checked> {{question.ch2}}<br>
+{% else %}
+
+<input type="checkbox" name="ch" value={{question.ch2}}  > {{question.ch2}}<br>
+{% endifequal %}  
+
+{% ifequal val  question.ch3 %}
+
+<input type="checkbox" name="ch" value={{question.ch3}} checked > {{question.ch3}}<br>
+
+{% else %}
+
+<input type="checkbox" name="ch" value={{question.ch3}} > {{question.ch3}}<br>
+{% endifequal %} 
+{% ifequal val  question.ch4 %}
+
+  <input type="checkbox" name="ch" value={{question.ch4}} checked> {{question.ch4}}<br>
+
+{% else %}
+
+ <input type="checkbox" name="ch" value={{question.ch4}} > {{question.ch4}}<br>
+{% endifequal %} 
+
+<input type="hidden" name="i" value={{i}} >
+
+<input type="hidden" name="a" id="sel">
+
+
+<input type="submit" value="Next"  >
+
+<br>
+
+
+
+
+</form><br>
+<form method = "POST" action="res" id={{question.id}}  >{% csrf_token %}
+
+<input type ="hidden" value={{question.id}} name="resp" > 
+<input type ="submit" name="back" value="back"> 
+
+</form>
+<form>{% csrf_token %}
+
+<input type="button" value="Quiz Timer" id="timer">
+
+
+</form>
+   
+    </ul>
+
+
+
+</body>
+</html>
+
+
+  url(r'^res', views.res, name='res'),
+
+
+
+
+<form>{% csrf_token %}
+
+<input type="button" value="Quiz Timer" id="timer">
+
+
+</form>
+
+
+
